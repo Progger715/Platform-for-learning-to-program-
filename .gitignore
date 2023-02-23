@@ -1,0 +1,3 @@
+.idea
+*.pyc
+lms_programming/config/.env
