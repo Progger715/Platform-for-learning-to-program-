@@ -3,7 +3,8 @@ import jinja2
 
 
 def build_code_from_template(users_code: str):
-    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("/home/bogdan/study/lms_project/Platform-for-learning-to-program-/handler_code/java_code/templates_java_code"))#"java_code/templates_java_code/"))
+    environment = jinja2.Environment(loader=jinja2.FileSystemLoader(
+        "/home/bogdan/study/lms_project/Platform-for-learning-to-program-/handler_code/java_code/templates_java_code"))  # "java_code/templates_java_code/"))
     template = environment.get_template("MainTemplate.java")
     content = template.render(data=users_code)
     # print(content)
@@ -13,21 +14,21 @@ def build_code_from_template(users_code: str):
     return name_file
 
 
-def compile_code(path_to_java_file: str):
+def run_code(path_to_java_file: str):
     try:
-        res = subprocess.run(['javac', path_to_java_file], capture_output=True).stderr.decode()
-        # print("res =\n", len(text))
-        if len(res) == 0:
-            res = "Поздравляем!\nКомпиляция прошла успешна!"
+        result = subprocess.run(['java', path_to_java_file], capture_output=True)
+        # print("res =\n", result)
+        if len(result.stderr.decode()) == 0:
+            response_server = f"Поздравляем!\nКомпиляция прошла успешна!\n{result.stdout.decode()}"
         else:
-            res = f"Упс! возникли следующие ошибки:\n{res}"
-        return res
+            response_server = f"Упс! возникли следующие ошибки:\n{result.stderr.decode()}"
+        return response_server
     except Exception as ex:
         print("[ERROR] compile_code\n", ex)
 
 
 def get_html_result_compiling(user_code: str):
-    return compile_code(build_code_from_template(user_code))
+    return run_code(build_code_from_template(user_code))
 
 
 if __name__ == '__main__':
