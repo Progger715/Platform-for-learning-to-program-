@@ -11,35 +11,25 @@
 
 <div class="container-fluid my-3">
 
-
-    <form action="" method="post">
-        {% csrf_token %}
-        <div class="row">
-            <h1 class="col-lg">Место для ввода кода:</h1>
-            <h1 class="col-lg">Вывод результата компиляции:</h1>
-        </div>
-        <div class="row">
-            <div class="col-lg">
+    <div class="row">
+        <h1 class="col-lg">Место для ввода кода:</h1>
+        <h1 class="col-lg">Вывод результата компиляции:</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg">
+            <form action="" method="post">
+                {% csrf_token %}
                 {{ form.input_code }}
-            </div>
-            <div class="col-lg">{
-                { form.result_compiling }}
-            </div>
-            <br>
-            <input type="submit" class="mx-auto" value="Отправить">
+                <br>
+                <input type="submit" value="Отправить">
+            </form>
         </div>
-
-    </form>
-
-
-    {#            <div class="col-lg mx-1">#}
-    {#                <H1>Результат компиляции:</H1>#}
-    {#                <form action="/your-name/" method="post">#}
-    {#                     {% csrf_token %}#}
-    {#                    {{ form.result_compiling }}#}
-    {#                    <input type="submit" value="OK">#}
-    {#                </form>#}
-    {#            </div>#}
+        <label class="col-lg border mb-4 mx-3">
+            <pre>
+            {{ data_from_server|linebreaksbr }}
+            </pre>
+        </label>
+    </div>
 
 
 </div>

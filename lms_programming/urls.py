@@ -20,5 +20,5 @@ from handler_code import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('example/', views.rec),
+    path('', views.rec),
 ]
