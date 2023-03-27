@@ -19,7 +19,9 @@
         <div class="col-lg">
             <form action="" method="post">
                 {% csrf_token %}
-                {{ form.input_code }}
+{#                {% autoescape off %}#}
+                {{ form.input_code}}
+{#                {% endautoescape %}#}
                 <br>
                 <input type="submit" value="Отправить">
             </form>

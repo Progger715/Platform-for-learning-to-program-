@@ -20,18 +20,20 @@ def build_code_from_template(users_code: str):
 def run_code(path_to_java_file: str):
     try:
         result = subprocess.run(['java', path_to_java_file], capture_output=True)
-        # print("result compiling\n", result)
+        print("result compiling\n", result)
         if len(result.stderr.decode()) == 0:
             response_server = f"Поздравляем!\nКомпиляция прошла успешна!\n{result.stdout.decode()}"
+            flag_errors = False
+            line_error = None
         else:
 
-            errors = result.stderr.decode()
-            start_index = errors.find(".java:") + 9
-            errors = errors[start_index:]
-            translate = get_data_about_error(errors)
+            message_error = __short_message_error(result.stderr.decode())
+            translate = __get_data_about_error(message_error)
 
-            response_server = f"Упс! возникли следующие ошибки:\n{errors}\n\nперевод:{translate}"
-        return response_server
+            response_server = f"Упс! возникли следующие ошибки:\n{message_error}\n\nперевод:{translate}"
+            flag_errors = True
+            line_error = __get_line_with_error(message_error)
+        return response_server, flag_errors, line_error
     except Exception as ex:
         print("[ERROR] compile_code\n", ex)
 
@@ -40,7 +42,7 @@ def get_html_result_compiling(user_code: str):
     return run_code(build_code_from_template(user_code))
 
 
-def get_data_about_error(error: str):
+def __get_data_about_error(error: str):
     import time
     openai.api_key = config.OPENAI_API_KEY
     prompt_ru = f"дай перевод ошибки в java: {error} Только перевод, не нужно пояснять."
@@ -64,10 +66,20 @@ def get_data_about_error(error: str):
     return response.choices[0].text
 
 
+def __short_message_error(errors: str):
+    start_index = errors.find(".java:") + 9
+    return errors[start_index:]
+
+
+def __get_line_with_error(message_error: str):
+    start_index = message_error.find("\n")
+    end_index = message_error.find("\n", start_index + 1)
+    return message_error[start_index:end_index]
+
+
 if __name__ == '__main__':
-    # data = """System.out.println("Hello, world!")"""
-    # # name_file = "java_code/final_code/Main.java"
-    # # build_code_from_template(stroka)
-    # # print(compile_code(name_file))
-    # print(get_html_result_compiling(data))
-    get_data_about_error()
+    data = """System.out.println("Hello, world!")"""
+    # name_file = "java_code/final_code/Main.java"
+    # build_code_from_template(stroka)
+    # print(compile_code(name_file))
+    print(get_html_result_compiling(data))
