@@ -14,3 +14,4 @@ def load_dotenv():
 load_dotenv()
 
 SECRET_KEY = os.environ['SECRET_KEY']
+OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
