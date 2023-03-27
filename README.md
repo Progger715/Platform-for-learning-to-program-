@@ -26,8 +26,8 @@
    все эти зависимости:
 
 ```
-   cd venv_lms/bin
-   cource activate
+   cd venvLms/bin
+   source activate
    which pip  // убедиться, что используется pip именно виртуального окружения 
    pip install -r [путь до файла req.txt, содержащегося в клонированном проекте]
 ```
