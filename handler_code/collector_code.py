@@ -6,12 +6,14 @@ from lms_programming.config import config
 
 
 def build_code_from_template(users_code: str):
-    environment = jinja2.Environment(loader=jinja2.FileSystemLoader(
-        "/home/bogdan/study/lms_project/Platform-for-learning-to-program-/handler_code/java_code/templates_java_code"))  # "java_code/templates_java_code/"))
+    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("handler_code/java_code/templates_java_code"))
+    # "/home/bogdan/study/lms_project/Platform-for-learning-to-program-/handler_code/java_code/templates_java_code"))
+    # "java_code/templates_java_code/"))
     template = environment.get_template("MainTemplate.java")
     content = template.render(data=users_code)
     # print(content)
-    name_file = "/home/bogdan/study/lms_project/Platform-for-learning-to-program-/handler_code/java_code/final_code/Main.java"
+    name_file = "handler_code/java_code/final_code/Main.java"
+    # "/home/bogdan/study/lms_project/Platform-for-learning-to-program-/handler_code/java_code/final_code/Main.java"
     with open(name_file, mode="w", encoding="utf-8") as file_for_save:
         file_for_save.write(content)
     return name_file
