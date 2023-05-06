@@ -49,10 +49,11 @@ def __get_data_about_error(error: str):
     openai.api_key = config.OPENAI_API_KEY
     prompt_ru = f"дай перевод ошибки в java: {error} Только перевод, не нужно пояснять."
     prompt_ru_answer = f"скажи кратко, как решаить следующую ошибку в java: {error}"
-    prompt_en = f"give translation of the error in java into Russian: {error} Only translation, no need to explain."
+    # prompt_en = f"give translation of the error in java into Russian: {error} Only translation, no need to explain."
+    cw_prompt = f"tell me in Russian briefly how to solve this problem in java: {error}"
 
     start_time = time.time_ns()
-    response = openai.Completion.create(engine="text-davinci-003", prompt=prompt_en, max_tokens=100)
+    response = openai.Completion.create(engine="text-davinci-003", prompt=cw_prompt, max_tokens=100)
     end_time = time.time_ns()
     delta_en = end_time - start_time
     print("time en=", delta_en)

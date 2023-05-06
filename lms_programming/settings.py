@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'handler_code',
-    'rest_framework'
+    'handler_code',  # added
+    'rest_framework',  # added
+    'corsheaders',  # added
 ]
 
 MIDDLEWARE = [
@@ -49,7 +50,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # added
 ]
+REST_FRAMEWORK = {
+    # чтобы джанго принимал все запросы, даже те, которые не прошли подтверждениение подлинности и аунтефикацию
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
+# CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'lms_programming.urls'
 

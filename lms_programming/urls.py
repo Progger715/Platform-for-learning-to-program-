@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from handler_code import views
+from handler_code import views, views_api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.rec),
+    path('api', views_api.HandlerCodeApiView.as_view()),
 ]
