@@ -25,11 +25,10 @@ def check_correct_code(received_code: str):
     check_values = [1, 2, 0, -1, -2, 100, -100, 1111111111]
     for value in check_values:
         result = subprocess.run(['java', path_to_file], input=str(value), capture_output=True, text=True)
+        if result.stderr != "":
+            return "Ошибка компиляции! Проверьте свой код."
         if value % 2 != 0 and result.stdout == "четно\n":
-            print("проверка не пройдена", value)
-            return False
+            return "проверка не пройдена на числе = ", value
         if value % 2 == 0 and result.stdout == "нечетно\n":
-            print("проверка не пройдена", value)
-            return False
-    return True
-
+            return "проверка не пройдена на числе = ", value
+    return "Поздравляем, Вы успешно справились с заданием!!"

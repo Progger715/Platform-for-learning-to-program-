@@ -13,9 +13,4 @@ class ApiViewConditionTask(APIView):
     def post(self, request):
         received_code = request.data['code']
         result_test = task_generation.check_correct_code(received_code)
-        if result_test:
-            message = "Поздравляю, Вы справились с заданием верно!"
-        else:
-            message = "К сожалению, Вы не справились с заданием! Проверьте свой код"
-
-        return Response({'result': message})
+        return Response({'result': result_test})
