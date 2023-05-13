@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.urls import path
 
 from handler_code import view_django
-from handler_code.views import api_view_ariphmetic_task, api_view_condition_task
+from handler_code.views import api_view_ariphmetic_task, api_view_condition_task, api_view_loop_tasks
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', view_django.rec),
     path('api/aripmetic_task', api_view_ariphmetic_task.ApiViewAriphmeticTask.as_view()),
     path('api/condition_task', api_view_condition_task.ApiViewConditionTask.as_view()),
+    path('api/loop_task', api_view_loop_tasks.ApiViewLoopTask.as_view()),
 ]

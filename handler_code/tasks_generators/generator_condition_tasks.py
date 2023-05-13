@@ -8,7 +8,7 @@ def generate_condition_task():
                f'"четно" или "нечетно" в консоль с помощью команды System.out.println().'
 
     initial_code = "Scanner scanner = new Scanner(System.in);\n" \
-                   "int number = scanner.nextInt();"
+                   "int number = scanner.nextInt();\n"
     return exercise, initial_code
 
 
