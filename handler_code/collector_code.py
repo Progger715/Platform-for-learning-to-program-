@@ -16,6 +16,7 @@ def build_code_from_template(users_code: str):
     # "/home/bogdan/study/lms_project/Platform-for-learning-to-program-/handler_code/java_code/final_code/Main.java"
     with open(name_file, mode="w", encoding="utf-8") as file_for_save:
         file_for_save.write(content)
+    file_for_save.close()
     return name_file
 
 
@@ -24,18 +25,19 @@ def run_code(path_to_java_file: str):
         result = subprocess.run(['java', path_to_java_file], capture_output=True)
         print("result compiling\n", result)
         if len(result.stderr.decode()) == 0:
-            response_server = f"Поздравляем!\nКомпиляция прошла успешна!\n{result.stdout.decode()}"
+            response_server = f"Поздравляем, компиляция прошла успешна!\n" \
+                              f"Результат компиляции:\n{result.stdout.decode()}"
             flag_errors = False
             line_error = None
         else:
 
             message_error = __short_message_error(result.stderr.decode())
-            translate = __get_data_about_error(message_error)
+            translate = "тут должен быть перевод"  # __get_data_about_error(message_error)
 
-            response_server = f"Упс! возникли следующие ошибки:\n{message_error}\n\nперевод:{translate}"
+            response_server = f"Упс! Возникли следующие ошибки:\n{message_error}\n\nПеревод:{translate}"
             flag_errors = True
             line_error = __get_line_with_error(message_error)
-        return response_server, flag_errors, line_error
+        return response_server, flag_errors, result.stdout.decode()  # , line_error
     except Exception as ex:
         print("[ERROR] compile_code\n", ex)
 
@@ -53,7 +55,7 @@ def __get_data_about_error(error: str):
     cw_prompt = f"tell me in Russian briefly how to solve this problem in java: {error}"
 
     start_time = time.time_ns()
-    response = openai.Completion.create(engine="text-davinci-003", prompt=cw_prompt, max_tokens=100)
+    response = openai.Completion.create(engine="text-davinci-003", prompt=cw_prompt, max_tokens=350)
     end_time = time.time_ns()
     delta_en = end_time - start_time
     print("time en=", delta_en)

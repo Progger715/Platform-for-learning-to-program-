@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from handler_code import views, views_api
+from handler_code import view_django
+from handler_code.views import api_view_ariphmetic_task, api_view_condition_task
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.rec),
-    path('api', views_api.HandlerCodeApiView.as_view()),
+    path('', view_django.rec),
+    path('api/aripmetic_task', api_view_ariphmetic_task.ApiViewAriphmeticTask.as_view()),
+    path('api/condition_task', api_view_condition_task.ApiViewConditionTask.as_view()),
 ]
