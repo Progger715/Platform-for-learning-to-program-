@@ -1,4 +1,5 @@
 .idea
 *.pyc
 lms_programming/config/.env
+handler_code/config/.env
 handler_code/java_code/final_code/*

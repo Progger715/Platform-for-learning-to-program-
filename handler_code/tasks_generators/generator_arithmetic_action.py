@@ -33,7 +33,9 @@ def generate_math_expression_exercise():
     # Сформулируйте задание для пользователя
     operator_symbols = ' '.join(selected_operators)
     exercise = f"Даны три числа: {a}, {b} и {c}. Выполните математические операции '{operator_symbols}' " \
-               f"между ними и получите ответ {answer}. Выведите ответ на экран (команда System.out.println())."
+               f"между ними и получите ответ {answer}. Если количество арифметических знаков в задании равно " \
+               f"количиству исходных слогаемых, значит последние два действия применяются к последнему слагаемому. " \
+               f"Выведите ответ на экран (команда System.out.println())."
 
     initial_code = create_initial_code_for_user((a, b, c))
 
@@ -50,4 +52,18 @@ def create_initial_code_for_user(inner_data: tuple):
 
 
 # task, inner_data, answer = generate_math_expression_exercise()
-print(generate_math_expression_exercise())
+# print(generate_math_expression_exercise())
+
+if __name__ == '__main__':
+    from cryptography.fernet import Fernet
+    from handler_code.config import config
+
+    data = "Hello, World!"
+
+    cipher_suite = Fernet(
+        config.KEY_ENCRYPTION)  # Создание объекта cipher_suite для шифрования и расшифрования данных с использованием ключа
+    cipher_text = cipher_suite.encrypt(data.encode())
+    decrypt_text = plain_string = cipher_suite.decrypt(cipher_text).decode('utf-8')
+
+    print(cipher_text)
+    print(decrypt_text)
