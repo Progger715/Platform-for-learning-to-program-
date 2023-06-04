@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from users.tools.user import User
 
 
 class ApiViewLogin(APIView):
@@ -9,4 +10,9 @@ class ApiViewLogin(APIView):
         # return Response({'task': {task}, 'inner_data': {initial_code}, 'answer': {data_for_answer}})
 
     def post(self, request):
-        return Response({'result': 'false'})
+        login = request.data['login']
+        password = request.data['password']
+        # print(f"login ={login}")
+        # print("password = ", password)
+        result_checking = User.check_login(login, password)
+        return Response({'result': result_checking})
